@@ -22,14 +22,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js[x]$/,
-        loaders: [
-          'react-hot-loader/webpack',
-          'babel'
-        ],
-        include: path.join(__dirname, 'src')
-      },
-      {
         test: /\.js[x]?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
