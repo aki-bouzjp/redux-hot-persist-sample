@@ -6,9 +6,13 @@ import {
   compose,
   combineReducers,
 } from 'redux';
+import {
+  ConnectedRouter,
+  routerMiddleware,
+} from 'react-router-redux';
 import { Provider } from 'react-redux';
 import {
-  composeWithDevTools
+  composeWithDevTools,
 } from 'redux-devtools-extension';
 import {
   persistStore,
@@ -25,35 +29,31 @@ import { clientMiddleware } from './middleware.jsx';
 
 
 
-export default class Persist extends React.Component {
+export default function() {
 
-  render() {
-
-    const config = {
-      key: 'root',
-      storage,
-    };
-
-    const reducers = combineReducers({
-      Reducer,
-    });
-
-    const store = createStore(
-      persistReducer(config, reducers),
-      composeWithDevTools(
+  const config = {
+    key: 'root',
+    storage,
+  };
+  const reducers = combineReducers({
+    Reducer,
+  });
+  const store = createStore(
+    persistReducer(config, reducers),
+    composeWithDevTools(
       applyMiddleware(
         thunkMiddleware,
         clientMiddleware,
       )
-    ));
-    const persistor = persistStore(store);
+    )
+  );
+  const persistor = persistStore(store);
 
-    return (
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <Container />
-        </PersistGate>
-      </Provider>
-    );
-  }
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Container />
+      </PersistGate>
+    </Provider>
+  );
 }
